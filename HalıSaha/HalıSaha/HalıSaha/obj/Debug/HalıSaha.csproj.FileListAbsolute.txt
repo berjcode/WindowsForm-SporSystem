@@ -1,0 +1,14 @@
+C:\Users\abdbl\OneDrive\Masaüstü\MessageApp Big-a\HalıSaha\HalıSaha\HalıSaha\bin\Debug\HalıSaha.exe.config
+C:\Users\abdbl\OneDrive\Masaüstü\MessageApp Big-a\HalıSaha\HalıSaha\HalıSaha\bin\Debug\HalıSaha.exe
+C:\Users\abdbl\OneDrive\Masaüstü\MessageApp Big-a\HalıSaha\HalıSaha\HalıSaha\bin\Debug\HalıSaha.pdb
+C:\Users\abdbl\OneDrive\Masaüstü\MessageApp Big-a\HalıSaha\HalıSaha\HalıSaha\obj\Debug\HalıSaha.csproj.AssemblyReference.cache
+C:\Users\abdbl\OneDrive\Masaüstü\MessageApp Big-a\HalıSaha\HalıSaha\HalıSaha\obj\Debug\HalıSaha.csproj.SuggestedBindingRedirects.cache
+C:\Users\abdbl\OneDrive\Masaüstü\MessageApp Big-a\HalıSaha\HalıSaha\HalıSaha\obj\Debug\HalıSaha.Login.resources
+C:\Users\abdbl\OneDrive\Masaüstü\MessageApp Big-a\HalıSaha\HalıSaha\HalıSaha\obj\Debug\HalıSaha.Properties.Resources.resources
+C:\Users\abdbl\OneDrive\Masaüstü\MessageApp Big-a\HalıSaha\HalıSaha\HalıSaha\obj\Debug\HalıSaha.csproj.GenerateResource.cache
+C:\Users\abdbl\OneDrive\Masaüstü\MessageApp Big-a\HalıSaha\HalıSaha\HalıSaha\obj\Debug\HalıSaha.csproj.CoreCompileInputs.cache
+C:\Users\abdbl\OneDrive\Masaüstü\MessageApp Big-a\HalıSaha\HalıSaha\HalıSaha\obj\Debug\HalıSaha.exe
+C:\Users\abdbl\OneDrive\Masaüstü\MessageApp Big-a\HalıSaha\HalıSaha\HalıSaha\obj\Debug\HalıSaha.pdb
+C:\Users\abdbl\OneDrive\Masaüstü\MessageApp Big-a\HalıSaha\HalıSaha\HalıSaha\obj\Debug\HalıSaha.Home.resources
+C:\Users\abdbl\OneDrive\Masaüstü\MessageApp Big-a\HalıSaha\HalıSaha\HalıSaha\obj\Debug\HalıSaha.Register.resources
+C:\Users\abdbl\OneDrive\Masaüstü\MessageApp Big-a\HalıSaha\HalıSaha\HalıSaha\obj\Debug\HalıSaha.Member.resources
