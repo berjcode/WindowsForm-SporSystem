@@ -21,5 +21,7 @@ namespace HalıSaha.Models
         public string durum;
         public string telefon;
 
+      
+
     }
 }

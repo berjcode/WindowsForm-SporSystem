@@ -229,19 +229,32 @@ namespace HalıSaha
 
                 Button button = new Button();
                 button.Text = row["RandevuSaati"] + " " + row["Ad"].ToString() + " " + row["Soyad"].ToString() + " " + row["Telefon"].ToString() + "  " + row["Saha"].ToString();
-
                 button.Width = buttonWidth;
                 button.Height = buttonHeight;
+                button.FlatStyle = FlatStyle.Flat;
+                button1.Font = new Font("Arial", 14, FontStyle.Regular);
                 button.Top = (buttonHeight + 10) * i;
                 button.Location = new Point(10, y);
-                button.Click += new EventHandler(Button1_Click);
+                button.Click += new EventHandler(Button_Click);
 
                 if (row["Durum"].ToString() == "Rezerve")
                 {
+                    button.ForeColor = Color.Beige;
                     button.BackColor = Color.Green;
+                    //button.FlatAppearance.BorderColor = Color.Green;
+                    button.FlatAppearance.BorderSize = 2;
+
+
+
+
                 }
+
                 if (row["Durum"].ToString() == "Beklemede")
+                {
+
+
                     button.ForeColor = Color.Red;
+                }
                 // Butonu panele ekliyoruz.
                 panel.Controls.Add(button);
                 y += 60;
@@ -293,20 +306,32 @@ namespace HalıSaha
 
                 Button button = new Button();
                 button.Text = row["RandevuSaati"] + " " + row["Ad"].ToString() + " " + row["Soyad"].ToString() + " " + row["Telefon"].ToString() + "  " + row["Saha"].ToString();
-
                 button.Width = buttonWidth;
                 button.Height = buttonHeight;
+                button.FlatStyle = FlatStyle.Flat;
+                button1.Font = new Font("Arial", 14, FontStyle.Regular);
                 button.Top = (buttonHeight + 10) * i;
                 button.Location = new Point(10, y);
-                button.Click += new EventHandler(Button2_Click);
+                button.Click += new EventHandler(Button_Click);
 
                 if (row["Durum"].ToString() == "Rezerve")
                 {
+                    button.ForeColor = Color.Beige;
                     button.BackColor = Color.Green;
+                    //button.FlatAppearance.BorderColor = Color.Green;
+                    button.FlatAppearance.BorderSize = 2;
+
+
+
+
                 }
+
                 if (row["Durum"].ToString() == "Beklemede")
+                {
+
+
                     button.ForeColor = Color.Red;
-                // Butonu panele ekliyoruz.
+                }
                 panel.Controls.Add(button);
                 y += 60;
 
@@ -359,16 +384,30 @@ namespace HalıSaha
 
                 button.Width = buttonWidth;
                 button.Height = buttonHeight;
+                button.FlatStyle = FlatStyle.Flat;
+                button1.Font = new Font("Arial", 14, FontStyle.Regular);
                 button.Top = (buttonHeight + 10) * i;
                 button.Location = new Point(10, y);
-                button.Click += new EventHandler(Button3_Click);
+                button.Click += new EventHandler(Button_Click);
 
                 if (row["Durum"].ToString() == "Rezerve")
                 {
+                    button.ForeColor = Color.Beige;
                     button.BackColor = Color.Green;
+                    //button.FlatAppearance.BorderColor = Color.Green;
+                    button.FlatAppearance.BorderSize = 2;
+
+
+
+
                 }
+
                 if (row["Durum"].ToString() == "Beklemede")
+                {
+
+
                     button.ForeColor = Color.Red;
+                }
                 // Butonu panele ekliyoruz.
                 panel.Controls.Add(button);
                 y += 60;
@@ -421,17 +460,32 @@ namespace HalıSaha
                 button.Text = row["RandevuSaati"] + " " + row["Ad"].ToString() + " " + row["Soyad"].ToString() + " " + row["Telefon"].ToString();
 
                 button.Width = buttonWidth;
+                button.Width = buttonWidth;
                 button.Height = buttonHeight;
+                button.FlatStyle = FlatStyle.Flat;
+                button1.Font = new Font("Arial", 14, FontStyle.Regular);
                 button.Top = (buttonHeight + 10) * i;
                 button.Location = new Point(10, y);
-                button.Click += new EventHandler(Button4_Click);
+                button.Click += new EventHandler(Button_Click);
 
                 if (row["Durum"].ToString() == "Rezerve")
                 {
+                    button.ForeColor = Color.Beige;
                     button.BackColor = Color.Green;
+                    //button.FlatAppearance.BorderColor = Color.Green;
+                    button.FlatAppearance.BorderSize = 2;
+
+
+
+
                 }
+
                 if (row["Durum"].ToString() == "Beklemede")
+                {
+
+
                     button.ForeColor = Color.Red;
+                }
                 // Butonu panele ekliyoruz.
                 panel.Controls.Add(button);
                 y += 60;
@@ -485,16 +539,31 @@ namespace HalıSaha
 
                 button.Width = buttonWidth;
                 button.Height = buttonHeight;
+                button.FlatStyle = FlatStyle.Flat;
+                button1.Font = new Font("Arial", 14, FontStyle.Regular);
                 button.Top = (buttonHeight + 10) * i;
                 button.Location = new Point(10, y);
-                button.Click += new EventHandler(Button5_Click);
+                button.Click += new EventHandler(Button_Click);
 
                 if (row["Durum"].ToString() == "Rezerve")
                 {
+                    button.ForeColor = Color.Beige;
                     button.BackColor = Color.Green;
+                    //button.FlatAppearance.BorderColor = Color.Green;
+                    button.FlatAppearance.BorderSize = 2;
+
+
+
+
                 }
+
                 if (row["Durum"].ToString() == "Beklemede")
+                {
+
+
                     button.ForeColor = Color.Red;
+                }
+                // Butonu panele ekliyoruz.
                 // Butonu panele ekliyoruz.
                 panel.Controls.Add(button);
                 y += 60;
@@ -549,16 +618,30 @@ namespace HalıSaha
 
                 button.Width = buttonWidth;
                 button.Height = buttonHeight;
+                button.FlatStyle = FlatStyle.Flat;
+                button1.Font = new Font("Arial", 14, FontStyle.Regular);
                 button.Top = (buttonHeight + 10) * i;
                 button.Location = new Point(10, y);
-                button.Click += new EventHandler(Button6_Click);
+                button.Click += new EventHandler(Button_Click);
 
                 if (row["Durum"].ToString() == "Rezerve")
                 {
+                    button.ForeColor = Color.Beige;
                     button.BackColor = Color.Green;
+                    //button.FlatAppearance.BorderColor = Color.Green;
+                    button.FlatAppearance.BorderSize = 2;
+
+
+
+
                 }
+
                 if (row["Durum"].ToString() == "Beklemede")
+                {
+
+
                     button.ForeColor = Color.Red;
+                }
                 // Butonu panele ekliyoruz.
                 panel.Controls.Add(button);
                 y += 60;

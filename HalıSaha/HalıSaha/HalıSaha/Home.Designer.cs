@@ -61,7 +61,7 @@
             // 
             // Yenile
             // 
-            this.Yenile.Location = new System.Drawing.Point(32, 241);
+            this.Yenile.Location = new System.Drawing.Point(32, 369);
             this.Yenile.Name = "Yenile";
             this.Yenile.Size = new System.Drawing.Size(182, 74);
             this.Yenile.TabIndex = 2;
@@ -72,7 +72,7 @@
             // panel1
             // 
             this.panel1.AutoScroll = true;
-            this.panel1.BackColor = System.Drawing.Color.PaleGreen;
+            this.panel1.BackColor = System.Drawing.Color.LimeGreen;
             this.panel1.Location = new System.Drawing.Point(335, 48);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(168, 753);
@@ -81,7 +81,7 @@
             // panel2
             // 
             this.panel2.AutoScroll = true;
-            this.panel2.BackColor = System.Drawing.Color.PaleGreen;
+            this.panel2.BackColor = System.Drawing.Color.LimeGreen;
             this.panel2.Location = new System.Drawing.Point(527, 48);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(173, 753);
@@ -90,7 +90,7 @@
             // panel3
             // 
             this.panel3.AutoScroll = true;
-            this.panel3.BackColor = System.Drawing.Color.PaleGreen;
+            this.panel3.BackColor = System.Drawing.Color.LimeGreen;
             this.panel3.Location = new System.Drawing.Point(734, 48);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(163, 753);
@@ -99,7 +99,7 @@
             // panel4
             // 
             this.panel4.AutoScroll = true;
-            this.panel4.BackColor = System.Drawing.Color.PaleGreen;
+            this.panel4.BackColor = System.Drawing.Color.LimeGreen;
             this.panel4.Location = new System.Drawing.Point(942, 48);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(163, 753);
@@ -108,7 +108,7 @@
             // panel5
             // 
             this.panel5.AutoScroll = true;
-            this.panel5.BackColor = System.Drawing.Color.PaleGreen;
+            this.panel5.BackColor = System.Drawing.Color.LimeGreen;
             this.panel5.Location = new System.Drawing.Point(1141, 48);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(153, 753);
@@ -116,7 +116,7 @@
             // 
             // panel6
             // 
-            this.panel6.BackColor = System.Drawing.Color.PaleGreen;
+            this.panel6.BackColor = System.Drawing.Color.LimeGreen;
             this.panel6.Location = new System.Drawing.Point(1353, 48);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(152, 753);
@@ -124,7 +124,7 @@
             // 
             // panel7
             // 
-            this.panel7.BackColor = System.Drawing.Color.PaleGreen;
+            this.panel7.BackColor = System.Drawing.Color.LimeGreen;
             this.panel7.Location = new System.Drawing.Point(1522, 48);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(161, 753);
@@ -132,6 +132,7 @@
             // 
             // pictureBox2
             // 
+            this.pictureBox2.BackColor = System.Drawing.Color.LimeGreen;
             this.pictureBox2.BackgroundImage = global::HalıSaha.Properties.Resources.backgroundpanel;
             this.pictureBox2.Location = new System.Drawing.Point(1, 0);
             this.pictureBox2.Name = "pictureBox2";
@@ -219,7 +220,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(32, 358);
+            this.button2.Location = new System.Drawing.Point(32, 252);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(182, 74);
             this.button2.TabIndex = 26;

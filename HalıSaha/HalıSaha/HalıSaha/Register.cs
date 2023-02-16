@@ -138,8 +138,97 @@ namespace HalıSaha
 
         }
 
-        
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            string searchValue = textBox1.Text.Trim();
 
 
+                if(string.IsNullOrEmpty(searchValue))
+            {
+                //
+
+            }else
+            {
+                SearchData(searchValue);
+            }
+
+               
+
+
+        }
+
+
+       public void SearchData(string seachValue)
+        {
+            string query = "select * from Member  where Name like @SearchValue or Surname like @SearchValue";
+
+            SqlCommand command= new SqlCommand(query,conn);
+
+            conn.Open();
+
+            command.Parameters.AddWithValue("@SearchValue", "%" + seachValue + "%");
+
+
+            SqlDataAdapter adapter = new SqlDataAdapter(command);
+            DataTable dataTable= new DataTable();
+
+            adapter.Fill(dataTable);
+            dataGridView1.DataSource = dataTable;
+
+            conn.Close();
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            
+            if (e.ColumnIndex == 0 && e.RowIndex >= 0 && dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex] is DataGridViewCheckBoxCell)
+            {
+                DataGridViewCheckBoxCell chk = (DataGridViewCheckBoxCell)dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex];
+
+                string  state = dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString();
+
+
+                foreach (DataGridViewRow row in dataGridView1.Rows)
+                {
+                    if (row.Index != e.RowIndex)
+                    {
+                        DataGridViewCheckBoxCell chk2 = (DataGridViewCheckBoxCell)row.Cells[0];
+                        chk2.Value = chk2.FalseValue;
+                    }
+                }
+                if (state == "Yasaklı")
+                    MessageBox.Show("Bu kişi Yasaklanmıştır","Yasaklı Üye");
+                if (chk.Value == chk.TrueValue && state!= "Yasaklı")
+                {
+                    textBox1.Text = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString();
+                    textBox2.Text = dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString();
+                    textBox3.Text = dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString();
+                    chk.Value = chk.TrueValue;
+                    dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightGreen;
+                }
+                else if (chk.Value == chk.FalseValue)
+                {
+                    textBox1.Clear();
+                    textBox2.Clear();
+                    textBox3.Clear();
+                    chk.Value = chk.FalseValue;
+                    dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = dataGridView1.DefaultCellStyle.BackColor;
+                }
+            }
+            else
+            {
+                foreach (DataGridViewRow row in dataGridView1.Rows)
+                {
+                    DataGridViewCheckBoxCell chk = (DataGridViewCheckBoxCell)row.Cells[0];
+                    chk.Value = chk.FalseValue;
+                    dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = dataGridView1.DefaultCellStyle.BackColor;
+                }
+                textBox1.Clear();
+                textBox2.Clear();
+                textBox3.Clear();
+
+            }
+
+        }
     }
 }
