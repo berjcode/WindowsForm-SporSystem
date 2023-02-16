@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,7 +43,7 @@ namespace HalıSaha
                 randevu.saha = comboBox1.SelectedItem == null ? "Seçilmedi" : comboBox1.SelectedItem.ToString();
 
                 randevu.saat = comboBox2.SelectedItem == null ? "Seçilmedi" : comboBox2.SelectedItem.ToString();
-                randevu.gun = comboBox3.SelectedItem == null ? "Seçilmedi" : comboBox3.SelectedItem.ToString();
+               
                 randevu.durum = comboBox4.SelectedItem == null ? "Seçilmedi" : comboBox4.SelectedItem.ToString();
                 randevu.telefon = textBox3.Text;
            
@@ -50,23 +51,29 @@ namespace HalıSaha
 
             try
             {
+
+                //int day = dateTimePicker1.Value.Day;
+                DateTime selectedDate = dateTimePicker1.Value;
+
+                string formatDate = selectedDate.ToString("dddd", new CultureInfo("tr-TR"));
                 conn.Open();
+               
+                string query = "insert into Randevutbl (Ad,Soyad,Saha,RandevuGunu,RandevuSaati,Durum,Telefon,RandevuTarihi) values (@ad,@soyad,@saha,@randevugunu,@randevusaati,@durum,@telefon,@randevutarihi)";
 
-                string query = "insert into Randevutbl (Ad,Soyad,Saha,RandevuGunu,RandevuSaati,Durum,Telefon) values (@ad,@soyad,@saha,@randevugunu,@randevusaati,@durum,@telefon)";
-
-
+           // DateTime selectdate = dateTimePicker1.Value;
                 using (SqlCommand command = new SqlCommand(query, conn))
 
                 {
                     command.Parameters.AddWithValue("@ad", randevu.ad);
                     command.Parameters.AddWithValue("@soyad", randevu.Soyad);
                     command.Parameters.AddWithValue("@saha", randevu.saha);
-                    command.Parameters.AddWithValue("@randevugunu", randevu.gun);
+                    command.Parameters.AddWithValue("@randevugunu", formatDate);
                     command.Parameters.AddWithValue("@randevusaati", randevu.saat);
 
                     command.Parameters.AddWithValue("@durum", randevu.durum);
                     command.Parameters.AddWithValue("@telefon", textBox3.Text);
 
+                    command.Parameters.AddWithValue("@randevutarihi", selectedDate);
                     command.ExecuteNonQuery();
                 }
 
@@ -74,13 +81,14 @@ namespace HalıSaha
                 conn.Close();
 
 
-
+                
                 MessageBox.Show("Başarıyla Kayıt Edildi");
+               
             }
-            catch
+            catch(Exception exception)
             {
 
-                MessageBox.Show("Bir hata oluştu");
+                MessageBox.Show(exception.Message,"Bir hata oluştu");
             }
 
            
@@ -93,8 +101,8 @@ namespace HalıSaha
         private void GetComboboxValue()
         {
             comboBox1.Items.Add("A1");
-            comboBox1.Items.Add("C1");
-            comboBox1.Items.Add("C3");
+            comboBox1.Items.Add("A2");
+            comboBox1.Items.Add("A3");
 
 
             comboBox2.Items.Add("09.00- 10.00");
@@ -119,13 +127,7 @@ namespace HalıSaha
             comboBox2.Items.Add("04.00- 05.00");
 
             //
-            comboBox3.Items.Add("Pazartesi");
-            comboBox3.Items.Add("Salı");
-            comboBox3.Items.Add("Carşamba");
-            comboBox3.Items.Add("Perşembe");
-            comboBox3.Items.Add("Cuma");
-            comboBox3.Items.Add("Cumartesi");
-            comboBox3.Items.Add("Pazar");
+            
 
             //
             comboBox4.Items.Add("Rezerve");
@@ -184,8 +186,12 @@ namespace HalıSaha
             if (e.ColumnIndex == 0 && e.RowIndex >= 0 && dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex] is DataGridViewCheckBoxCell)
             {
                 DataGridViewCheckBoxCell chk = (DataGridViewCheckBoxCell)dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex];
-
-                string  state = dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString();
+               
+            
+               
+                    
+               
+              
 
 
                 foreach (DataGridViewRow row in dataGridView1.Rows)
@@ -196,6 +202,8 @@ namespace HalıSaha
                         chk2.Value = chk2.FalseValue;
                     }
                 }
+                string state = dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString();
+               
                 if (state == "Yasaklı")
                     MessageBox.Show("Bu kişi Yasaklanmıştır","Yasaklı Üye");
                 if (chk.Value == chk.TrueValue && state!= "Yasaklı")
@@ -228,6 +236,11 @@ namespace HalıSaha
                 textBox3.Clear();
 
             }
+
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
 
         }
     }

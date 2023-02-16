@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
 
 namespace HalıSaha
 {
@@ -24,11 +25,11 @@ namespace HalıSaha
 
         //background
 
-    
-
-      
 
 
+
+
+        public int sayac = 0;
 
 
         public Home()
@@ -42,12 +43,86 @@ namespace HalıSaha
         private void Home_Load(object sender, EventArgs e)
         {
             //this.BackColor = Color.ForestGreen;
-          
+            this.panel9.Visible = false;
             Getlist();
 
         }
 
-     
+        private void Button_Click(object sender, EventArgs e)
+        {
+
+
+         
+            this.panel9.Visible = true;
+            
+            Button button = (Button)sender;
+         
+
+            textBox1.Text = button.Text;
+           
+
+
+
+
+
+            //MessageBox.Show("Bilgiler: " + button.Text, "Detay");
+
+
+
+
+        }
+
+
+
+        //randevu silme
+       
+
+        private void Button_Delete(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            int id = Convert.ToInt32(button.Tag);
+
+            string query = "delete from Randevutbl where Id = @id";
+
+            SqlCommand command = new SqlCommand(query, conn);
+            command.Parameters.AddWithValue("@id", id);
+
+            if (sayac == 0)
+            {
+                sayac++;
+            
+            }
+            else
+            {
+                if( MessageBox.Show("Bu kaydı silmek istediğinizden emin misiniz?", "Kaydı Sil", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    conn.Open();
+                    int result = command.ExecuteNonQuery();
+                    conn.Close();
+
+                    if (result > 0)
+                    {
+                        MessageBox.Show("Randevu Silindi");
+                        panel9.Visible = false;
+                        sayac = 0;
+
+
+                        
+                    }
+                    else
+                    {
+                        MessageBox.Show("Randevu Silinemedi");
+                        sayac = 0;
+                    }
+                }
+
+               sayac = 0;
+
+                //sayac = id == 0 ? 0 : 1;
+                //Getlist();
+            }
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
 
@@ -63,16 +138,7 @@ namespace HalıSaha
        public void Getlist()
         {
 
-            //string query = "select * from Randevutbl order by RandevuSaati asc";
-
-            //SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
-
-
-            //DataTable table = new DataTable();
-            //dataGridView1.DataSource = table;
-
-            //adapter.Fill(table);
-            //conn.Close();
+           
 
             GetListAppoitnmentMonday();
             GetListAppoitnmentThuesday(panel2);
@@ -122,13 +188,16 @@ namespace HalıSaha
 
 
         #region Monday
-        private void GetListAppoitnmentMonday()
+      public void GetListAppoitnmentMonday()
         {
-
+           
             DataTable myDataTable = new DataTable();
-            string query = "SELECT * FROM Randevutbl where RandevuGunu= 'Pazartesi' order by RandevuSaati asc";
+            DateTime today = DateTime.Today;
+         //   string query = "SELECT * FROM Randevutbl where RandevuGunu= 'Pazartesi' order by RandevuSaati asc";
+            string query = "SELECT * FROM Randevutbl WHERE RandevuGunu= 'Pazartesi' and RandevuTarihi >= @today   ORDER BY RandevuSaati ASC,RandevuTarihi asc";
 
-                SqlCommand command = new SqlCommand(query, conn);
+            SqlCommand command = new SqlCommand(query, conn);
+            command.Parameters.AddWithValue("@today", today);
                conn.Open();
              
             SqlDataAdapter adapter = new SqlDataAdapter(command);
@@ -146,21 +215,29 @@ namespace HalıSaha
                 DataRow row = myDataTable.Rows[i];
 
                 // Buton nesnesini oluşturuyoruz.
-               
+                DateTime date = (DateTime)row["RandevuTarihi"];
+                int id = (int)row["Id"];
                 Button button = new Button();
-                button.Text = row["RandevuSaati"] + " " + row["Ad"].ToString() + " " + row["Soyad"].ToString() + " " + row["Telefon"].ToString() + "  " + row["Saha"].ToString();
+                button.Text = "Rezerve Tarihi:"+date.ToString("dd.MM.yyyy")  + " Rezerve eden: " + row["Ad"].ToString() + " " + row["Soyad"].ToString() + " Telefon Numarası: " + row["Telefon"].ToString() + " Saha Adı: " + row["Saha"].ToString();
 
                 button.Width = buttonWidth;
                 button.Height = buttonHeight;
-               
 
-                
+               
+                button.Tag = id;
+             
                 button.FlatStyle = FlatStyle.Flat;
                 button1.Font = new Font("Arial", 14, FontStyle.Regular);
                 button.Top = (buttonHeight + 10) * i;
                 button.Location = new Point(10, y);
                 button.Click += new EventHandler(Button_Click);
+                button.Click += new EventHandler(Button_Delete);
                 
+
+
+
+
+
                 if (row["Durum"].ToString() == "Rezerve")
                 {
                     button.ForeColor = Color.Beige;
@@ -191,24 +268,21 @@ namespace HalıSaha
             this.Controls.Add(panel);
         }
 
-        private void Button_Click(object sender, EventArgs e)
-        {
-            Button button = (Button)sender;
-            MessageBox.Show("Bilgiler: " + button.Text, "Detay");
-        }
+      
         #endregion
 
 
 
         #region thuesday
 
-        private void GetListAppoitnmentThuesday(Panel panel)
+       public void GetListAppoitnmentThuesday(Panel panel)
         {
 
             DataTable myDataTable = new DataTable();
-            string query = "SELECT * FROM Randevutbl where RandevuGunu= 'Salı' order by RandevuSaati asc";
-
+            string query = "SELECT * FROM Randevutbl WHERE RandevuGunu= 'Salı' and RandevuTarihi >= @today   ORDER BY RandevuSaati ASC,RandevuTarihi asc";
+            DateTime today = DateTime.Today;
             SqlCommand command = new SqlCommand(query, conn);
+            command.Parameters.AddWithValue("@today", today);
             conn.Open();
 
             SqlDataAdapter adapter = new SqlDataAdapter(command);
@@ -226,17 +300,19 @@ namespace HalıSaha
                 DataRow row = myDataTable.Rows[i];
 
                 // Buton nesnesini oluşturuyoruz.
-
+                DateTime date = (DateTime)row["RandevuTarihi"];
+                int id = (int)row["Id"];
                 Button button = new Button();
-                button.Text = row["RandevuSaati"] + " " + row["Ad"].ToString() + " " + row["Soyad"].ToString() + " " + row["Telefon"].ToString() + "  " + row["Saha"].ToString();
+                button.Text = "Rezerve Tarihi:" + date.ToString("dd.MM.yyyy") + " Rezerve eden: " + row["Ad"].ToString() + " " + row["Soyad"].ToString() + " Telefon Numarası: " + row["Telefon"].ToString() + " Saha Adı: " + row["Saha"].ToString();
                 button.Width = buttonWidth;
+                button.Tag = id;
                 button.Height = buttonHeight;
                 button.FlatStyle = FlatStyle.Flat;
                 button1.Font = new Font("Arial", 14, FontStyle.Regular);
                 button.Top = (buttonHeight + 10) * i;
                 button.Location = new Point(10, y);
                 button.Click += new EventHandler(Button_Click);
-
+                button.Click += new EventHandler(Button_Delete);
                 if (row["Durum"].ToString() == "Rezerve")
                 {
                     button.ForeColor = Color.Beige;
@@ -267,11 +343,7 @@ namespace HalıSaha
             //this.Controls.Add(panel2);
         }
 
-        private void Button1_Click(object sender, EventArgs e)
-        {
-            Button button = (Button)sender;
-            MessageBox.Show("Bilgiler: " + button.Text, "Detay");
-        }
+       
 
         #endregion
 
@@ -279,13 +351,14 @@ namespace HalıSaha
 
         #region Wednesday
 
-        private void GetListAppoitnmentWednesday(Panel panel)
+      public    void GetListAppoitnmentWednesday(Panel panel)
         {
 
             DataTable myDataTable = new DataTable();
-            string query = "SELECT * FROM Randevutbl where RandevuGunu= 'Carşamba' order by RandevuSaati asc";
-
+            string query = "SELECT * FROM Randevutbl WHERE RandevuGunu= 'Çarşamba' and RandevuTarihi >= @today   ORDER BY RandevuSaati ASC,RandevuTarihi asc";
+            DateTime today = DateTime.Today;
             SqlCommand command = new SqlCommand(query, conn);
+            command.Parameters.AddWithValue("@today", today);
             conn.Open();
 
             SqlDataAdapter adapter = new SqlDataAdapter(command);
@@ -304,8 +377,11 @@ namespace HalıSaha
 
                 // Buton nesnesini oluşturuyoruz.
 
+                DateTime date = (DateTime)row["RandevuTarihi"];
+                int id = (int)row["Id"];
                 Button button = new Button();
-                button.Text = row["RandevuSaati"] + " " + row["Ad"].ToString() + " " + row["Soyad"].ToString() + " " + row["Telefon"].ToString() + "  " + row["Saha"].ToString();
+                button.Text = "Rezerve Tarihi:" + date.ToString("dd.MM.yyyy") + " Rezerve eden: " + row["Ad"].ToString() + " " + row["Soyad"].ToString() + " Telefon Numarası: " + row["Telefon"].ToString() + " Saha Adı: " + row["Saha"].ToString();
+                button.Tag = id;
                 button.Width = buttonWidth;
                 button.Height = buttonHeight;
                 button.FlatStyle = FlatStyle.Flat;
@@ -313,6 +389,8 @@ namespace HalıSaha
                 button.Top = (buttonHeight + 10) * i;
                 button.Location = new Point(10, y);
                 button.Click += new EventHandler(Button_Click);
+                //button.Click += new EventHandler(button3_Click);
+                button.Click += new EventHandler(Button_Delete);
 
                 if (row["Durum"].ToString() == "Rezerve")
                 {
@@ -343,24 +421,21 @@ namespace HalıSaha
             //this.Controls.Add(panel2);
         }
 
-        private void Button2_Click(object sender, EventArgs e)
-        {
-            Button button = (Button)sender;
-            MessageBox.Show(" Bilgiler: " + button.Text,"Detay");
-        }
+      
 
         #endregion
 
 
         #region Thurday 
 
-        private void GetListAppoitnmentThursday(Panel panel)
+       public void GetListAppoitnmentThursday(Panel panel)
         {
 
             DataTable myDataTable = new DataTable();
-            string query = "SELECT * FROM Randevutbl where RandevuGunu= 'Perşembe' order by RandevuSaati asc";
-
+            string query = "SELECT * FROM Randevutbl WHERE RandevuGunu= 'Perşembe' and RandevuTarihi >= @today   ORDER BY RandevuSaati ASC,RandevuTarihi asc";
+            DateTime today = DateTime.Today;
             SqlCommand command = new SqlCommand(query, conn);
+            command.Parameters.AddWithValue("@today", today);
             conn.Open();
 
             SqlDataAdapter adapter = new SqlDataAdapter(command);
@@ -379,9 +454,11 @@ namespace HalıSaha
 
                 // Buton nesnesini oluşturuyoruz.
 
+                DateTime date = (DateTime)row["RandevuTarihi"];
+                int id = (int)row["Id"];
                 Button button = new Button();
-                button.Text = row["RandevuSaati"] + " " + row["Ad"].ToString() + " " + row["Soyad"].ToString() + " " + row["Telefon"].ToString() + "  " + row["Saha"].ToString();
-
+                button.Text = "Rezerve Tarihi:" + date.ToString("dd.MM.yyyy") + " Rezerve eden: " + row["Ad"].ToString() + " " + row["Soyad"].ToString() + " Telefon Numarası: " + row["Telefon"].ToString() + " Saha Adı: " + row["Saha"].ToString();
+                button.Tag = id;
                 button.Width = buttonWidth;
                 button.Height = buttonHeight;
                 button.FlatStyle = FlatStyle.Flat;
@@ -389,6 +466,10 @@ namespace HalıSaha
                 button.Top = (buttonHeight + 10) * i;
                 button.Location = new Point(10, y);
                 button.Click += new EventHandler(Button_Click);
+                button.Click += new EventHandler(Button_Delete);
+                //button.Click += new EventHandler(button3_Click);
+
+
 
                 if (row["Durum"].ToString() == "Rezerve")
                 {
@@ -420,24 +501,21 @@ namespace HalıSaha
             //this.Controls.Add(panel2);
         }
 
-        private void Button3_Click(object sender, EventArgs e)
-        {
-            Button button = (Button)sender;
-            MessageBox.Show("Bilgiler: " + button.Text,"Detay");
-        }
+
 
         #endregion
 
 
         #region Friday
 
-        private void GetListAppoitnmentFriday(Panel panel)
+        public void GetListAppoitnmentFriday(Panel panel)
         {
 
             DataTable myDataTable = new DataTable();
-            string query = "SELECT * FROM Randevutbl where RandevuGunu= 'Cuma' order by RandevuSaati asc";
-
+            string query = "SELECT * FROM Randevutbl WHERE RandevuGunu= 'Cuma' and RandevuTarihi >= @today   ORDER BY RandevuSaati ASC,RandevuTarihi asc";
+            DateTime today = DateTime.Today;
             SqlCommand command = new SqlCommand(query, conn);
+            command.Parameters.AddWithValue("@today", today);
             conn.Open();
 
             SqlDataAdapter adapter = new SqlDataAdapter(command);
@@ -456,10 +534,13 @@ namespace HalıSaha
 
                 // Buton nesnesini oluşturuyoruz.
 
+                DateTime date = (DateTime)row["RandevuTarihi"];
+                int id = (int)row["Id"];
                 Button button = new Button();
-                button.Text = row["RandevuSaati"] + " " + row["Ad"].ToString() + " " + row["Soyad"].ToString() + " " + row["Telefon"].ToString();
+                button.Text = "Rezerve Tarihi:" + date.ToString("dd.MM.yyyy") + " Rezerve eden: " + row["Ad"].ToString() + " " + row["Soyad"].ToString() + " Telefon Numarası: " + row["Telefon"].ToString() + " Saha Adı: " + row["Saha"].ToString();
 
                 button.Width = buttonWidth;
+                button.Tag = id;
                 button.Width = buttonWidth;
                 button.Height = buttonHeight;
                 button.FlatStyle = FlatStyle.Flat;
@@ -467,6 +548,10 @@ namespace HalıSaha
                 button.Top = (buttonHeight + 10) * i;
                 button.Location = new Point(10, y);
                 button.Click += new EventHandler(Button_Click);
+                button.Click += new EventHandler(Button_Delete);
+
+                //button.Click += new EventHandler(button3_Click);
+
 
                 if (row["Durum"].ToString() == "Rezerve")
                 {
@@ -498,24 +583,21 @@ namespace HalıSaha
             //this.Controls.Add(panel2);
         }
 
-        private void Button4_Click(object sender, EventArgs e)
-        {
-            Button button = (Button)sender;
-            MessageBox.Show("Bilgiler: " + button.Text);
-        }
+
 
         #endregion
 
 
         #region Saturday
 
-        private void GetListAppoitnmentSaturday(Panel panel)
+        public void GetListAppoitnmentSaturday(Panel panel)
         {
 
             DataTable myDataTable = new DataTable();
-            string query = "SELECT * FROM Randevutbl where RandevuGunu= 'Cumartesi' order by RandevuSaati asc";
-
+            string query = "SELECT * FROM Randevutbl WHERE RandevuGunu= 'Cumartesi' and RandevuTarihi >= @today   ORDER BY RandevuSaati ASC,RandevuTarihi asc";
+            DateTime today = DateTime.Today;
             SqlCommand command = new SqlCommand(query, conn);
+            command.Parameters.AddWithValue("@today", today);
             conn.Open();
 
             SqlDataAdapter adapter = new SqlDataAdapter(command);
@@ -534,9 +616,12 @@ namespace HalıSaha
 
                 // Buton nesnesini oluşturuyoruz.
 
-                Button button = new Button();
-                button.Text = row["RandevuSaati"] + " " + row["Ad"].ToString() + " " + row["Soyad"].ToString() + " " + row["Telefon"].ToString() + "  " + row["Saha"].ToString() ;
 
+                DateTime date = (DateTime)row["RandevuTarihi"];
+                int id = (int)row["Id"];
+                Button button = new Button();
+                button.Text = "Rezerve Tarihi:" + date.ToString("dd.MM.yyyy") + " Rezerve eden: " + row["Ad"].ToString() + " " + row["Soyad"].ToString() + " Telefon Numarası: " + row["Telefon"].ToString() + " Saha Adı: " + row["Saha"].ToString();
+                button.Tag = id;
                 button.Width = buttonWidth;
                 button.Height = buttonHeight;
                 button.FlatStyle = FlatStyle.Flat;
@@ -544,6 +629,10 @@ namespace HalıSaha
                 button.Top = (buttonHeight + 10) * i;
                 button.Location = new Point(10, y);
                 button.Click += new EventHandler(Button_Click);
+                button.Click += new EventHandler(Button_Delete);
+
+                //button.Click += new EventHandler(button3_Click);
+
 
                 if (row["Durum"].ToString() == "Rezerve")
                 {
@@ -576,11 +665,7 @@ namespace HalıSaha
             //this.Controls.Add(panel2);
         }
 
-        private void Button5_Click(object sender, EventArgs e)
-        {
-            Button button = (Button)sender;
-            MessageBox.Show("Bilgiler: " + button.Text);
-        }
+
 
         #endregion
 
@@ -588,13 +673,15 @@ namespace HalıSaha
 
         #region Sunday
 
-        private void GetListAppoitnmentSunday(Panel panel)
+        public void GetListAppoitnmentSunday(Panel panel)
         {
 
             DataTable myDataTable = new DataTable();
-            string query = "SELECT * FROM Randevutbl where RandevuGunu= 'Pazar' order by RandevuSaati asc";
 
+            string query = "SELECT * FROM Randevutbl WHERE RandevuGunu= 'Pazar' and RandevuTarihi >= @today   ORDER BY RandevuSaati ASC,RandevuTarihi asc";
+            DateTime today = DateTime.Today;
             SqlCommand command = new SqlCommand(query, conn);
+            command.Parameters.AddWithValue("@today", today);
             conn.Open();
 
             SqlDataAdapter adapter = new SqlDataAdapter(command);
@@ -613,9 +700,14 @@ namespace HalıSaha
 
                 // Buton nesnesini oluşturuyoruz.
 
+                DateTime date = (DateTime)row["RandevuTarihi"];
+                int id = (int)row["Id"];
                 Button button = new Button();
-                button.Text = row["RandevuSaati"] + " " + row["Ad"].ToString() + " " + row["Soyad"].ToString() + " " + row["Telefon"].ToString() + "  " + row["Saha"].ToString();
+                button.Text = "Rezerve Tarihi:" + date.ToString("dd.MM.yyyy") + " Rezerve eden: " + row["Ad"].ToString() + " " + row["Soyad"].ToString() + " Telefon Numarası: " + row["Telefon"].ToString() + " Saha Adı: " + row["Saha"].ToString();
 
+
+           
+                button.Tag = id;
                 button.Width = buttonWidth;
                 button.Height = buttonHeight;
                 button.FlatStyle = FlatStyle.Flat;
@@ -623,6 +715,12 @@ namespace HalıSaha
                 button.Top = (buttonHeight + 10) * i;
                 button.Location = new Point(10, y);
                 button.Click += new EventHandler(Button_Click);
+                //button.Click += new EventHandler(button3_Click);
+                button.Click += new EventHandler(Button_Delete);
+
+
+
+
 
                 if (row["Durum"].ToString() == "Rezerve")
                 {
@@ -654,28 +752,11 @@ namespace HalıSaha
             //this.Controls.Add(panel2);
         }
 
-        private void Button6_Click(object sender, EventArgs e)
-        {
-            Button button = (Button)sender;
-            MessageBox.Show("Bilgiler: " + button.Text);
-        }
+        
 
         #endregion
 
-        private void label7_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label7_Click_1(object sender, EventArgs e)
-        {
-
-        }
+      
 
         private void button2_Click_1(object sender, EventArgs e)
         {
@@ -684,6 +765,17 @@ namespace HalıSaha
 
             member.Show();
         }
+
+     
+
+    
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            panel9.Visible = false;
+        }
+
+        
     }
 }
 

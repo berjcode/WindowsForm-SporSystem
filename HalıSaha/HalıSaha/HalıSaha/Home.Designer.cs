@@ -46,12 +46,18 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
+            this.panel8 = new System.Windows.Forms.Panel();
+            this.panel9 = new System.Windows.Forms.Panel();
+            this.button4 = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.panel9.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(32, 133);
+            this.button1.Location = new System.Drawing.Point(32, 269);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(182, 74);
             this.button1.TabIndex = 0;
@@ -61,9 +67,9 @@
             // 
             // Yenile
             // 
-            this.Yenile.Location = new System.Drawing.Point(32, 369);
+            this.Yenile.Location = new System.Drawing.Point(45, 392);
             this.Yenile.Name = "Yenile";
-            this.Yenile.Size = new System.Drawing.Size(182, 74);
+            this.Yenile.Size = new System.Drawing.Size(169, 59);
             this.Yenile.TabIndex = 2;
             this.Yenile.Text = "Yenile";
             this.Yenile.UseVisualStyleBackColor = true;
@@ -73,9 +79,9 @@
             // 
             this.panel1.AutoScroll = true;
             this.panel1.BackColor = System.Drawing.Color.LimeGreen;
-            this.panel1.Location = new System.Drawing.Point(335, 48);
+            this.panel1.Location = new System.Drawing.Point(321, 48);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(168, 753);
+            this.panel1.Size = new System.Drawing.Size(200, 753);
             this.panel1.TabIndex = 3;
             // 
             // panel2
@@ -84,7 +90,7 @@
             this.panel2.BackColor = System.Drawing.Color.LimeGreen;
             this.panel2.Location = new System.Drawing.Point(527, 48);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(173, 753);
+            this.panel2.Size = new System.Drawing.Size(201, 753);
             this.panel2.TabIndex = 5;
             // 
             // panel3
@@ -93,47 +99,46 @@
             this.panel3.BackColor = System.Drawing.Color.LimeGreen;
             this.panel3.Location = new System.Drawing.Point(734, 48);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(163, 753);
+            this.panel3.Size = new System.Drawing.Size(194, 753);
             this.panel3.TabIndex = 6;
             // 
             // panel4
             // 
             this.panel4.AutoScroll = true;
             this.panel4.BackColor = System.Drawing.Color.LimeGreen;
-            this.panel4.Location = new System.Drawing.Point(942, 48);
+            this.panel4.Location = new System.Drawing.Point(934, 48);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(163, 753);
+            this.panel4.Size = new System.Drawing.Size(191, 753);
             this.panel4.TabIndex = 7;
             // 
             // panel5
             // 
             this.panel5.AutoScroll = true;
             this.panel5.BackColor = System.Drawing.Color.LimeGreen;
-            this.panel5.Location = new System.Drawing.Point(1141, 48);
+            this.panel5.Location = new System.Drawing.Point(1131, 48);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(153, 753);
+            this.panel5.Size = new System.Drawing.Size(201, 753);
             this.panel5.TabIndex = 8;
             // 
             // panel6
             // 
             this.panel6.BackColor = System.Drawing.Color.LimeGreen;
-            this.panel6.Location = new System.Drawing.Point(1353, 48);
+            this.panel6.Location = new System.Drawing.Point(1338, 48);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(152, 753);
+            this.panel6.Size = new System.Drawing.Size(189, 753);
             this.panel6.TabIndex = 9;
             // 
             // panel7
             // 
             this.panel7.BackColor = System.Drawing.Color.LimeGreen;
-            this.panel7.Location = new System.Drawing.Point(1522, 48);
+            this.panel7.Location = new System.Drawing.Point(1533, 48);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(161, 753);
+            this.panel7.Size = new System.Drawing.Size(193, 753);
             this.panel7.TabIndex = 10;
             // 
             // pictureBox2
             // 
-            this.pictureBox2.BackColor = System.Drawing.Color.LimeGreen;
-            this.pictureBox2.BackgroundImage = global::HalıSaha.Properties.Resources.backgroundpanel;
+            this.pictureBox2.BackColor = System.Drawing.Color.MediumSeaGreen;
             this.pictureBox2.Location = new System.Drawing.Point(1, 0);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(1737, 848);
@@ -216,11 +221,10 @@
             this.label7.Size = new System.Drawing.Size(60, 28);
             this.label7.TabIndex = 25;
             this.label7.Text = "Pazar";
-            this.label7.Click += new System.EventHandler(this.label7_Click_1);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(32, 252);
+            this.button2.Location = new System.Drawing.Point(32, 170);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(182, 74);
             this.button2.TabIndex = 26;
@@ -228,13 +232,61 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click_1);
             // 
+            // panel8
+            // 
+            this.panel8.Location = new System.Drawing.Point(134, 95);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(302, 402);
+            this.panel8.TabIndex = 27;
+            // 
+            // panel9
+            // 
+            this.panel9.BackColor = System.Drawing.Color.PaleGreen;
+            this.panel9.Controls.Add(this.button4);
+            this.panel9.Controls.Add(this.label8);
+            this.panel9.Controls.Add(this.textBox1);
+            this.panel9.Font = new System.Drawing.Font("Microsoft YaHei", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.panel9.Location = new System.Drawing.Point(12, 17);
+            this.panel9.Name = "panel9";
+            this.panel9.Size = new System.Drawing.Size(303, 353);
+            this.panel9.TabIndex = 0;
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(75, 282);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(117, 44);
+            this.button4.TabIndex = 3;
+            this.button4.Text = "Kapat";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(103, 21);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(77, 23);
+            this.label8.TabIndex = 1;
+            this.label8.Text = "Detaylar";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(20, 60);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(255, 216);
+            this.textBox1.TabIndex = 0;
+            // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.PaleGoldenrod;
             this.ClientSize = new System.Drawing.Size(1738, 813);
+            this.Controls.Add(this.panel9);
             this.Controls.Add(this.button2);
+            this.Controls.Add(this.Yenile);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -242,7 +294,6 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.Yenile);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.panel7);
@@ -252,6 +303,7 @@
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.pictureBox2);
+            this.Controls.Add(this.panel8);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Home";
@@ -259,6 +311,8 @@
             this.Text = "Home";
             this.Load += new System.EventHandler(this.Home_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            this.panel9.ResumeLayout(false);
+            this.panel9.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -284,5 +338,10 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Panel panel8;
+        private System.Windows.Forms.Panel panel9;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button button4;
     }
 }
