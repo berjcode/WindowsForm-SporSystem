@@ -45,6 +45,7 @@
             this.Seç = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.label8 = new System.Windows.Forms.Label();
+            this.listBox1 = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -168,7 +169,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(312, 385);
+            this.button1.Location = new System.Drawing.Point(220, 357);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(121, 50);
             this.button1.TabIndex = 14;
@@ -178,17 +179,21 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
+            this.dataGridView1.BackgroundColor = System.Drawing.Color.FloralWhite;
+            this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Seç});
-            this.dataGridView1.Location = new System.Drawing.Point(444, 43);
+            this.dataGridView1.GridColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.dataGridView1.Location = new System.Drawing.Point(357, 240);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(691, 326);
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridView1.Size = new System.Drawing.Size(693, 308);
             this.dataGridView1.TabIndex = 15;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
@@ -197,13 +202,14 @@
             this.Seç.HeaderText = "Seç";
             this.Seç.MinimumWidth = 6;
             this.Seç.Name = "Seç";
+            this.Seç.ReadOnly = true;
             this.Seç.Width = 125;
             // 
             // dateTimePicker1
             // 
             this.dateTimePicker1.Location = new System.Drawing.Point(138, 236);
             this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 22);
+            this.dateTimePicker1.Size = new System.Drawing.Size(145, 22);
             this.dateTimePicker1.TabIndex = 16;
             // 
             // label8
@@ -219,13 +225,23 @@
             this.label8.Text = "Randevu Günü";
             this.label8.Click += new System.EventHandler(this.label8_Click);
             // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 16;
+            this.listBox1.Location = new System.Drawing.Point(357, 54);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(117, 180);
+            this.listBox1.TabIndex = 18;
+            // 
             // Register
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkCyan;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(1156, 447);
+            this.ClientSize = new System.Drawing.Size(1081, 549);
+            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.dataGridView1);
@@ -272,5 +288,6 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn Seç;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ListBox listBox1;
     }
 }

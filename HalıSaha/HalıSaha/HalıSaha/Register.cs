@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -24,11 +25,12 @@ namespace HalıSaha
         public Register()
         {
             InitializeComponent();
+            GetTimeListbox();
             GetComboboxValue();
         }
         private void Register_Load(object sender, EventArgs e)
         {
-
+            GetTimeListbox();
         }
         public void button1_Click(object sender, EventArgs e)
         {
@@ -46,57 +48,88 @@ namespace HalıSaha
                
                 randevu.durum = comboBox4.SelectedItem == null ? "Seçilmedi" : comboBox4.SelectedItem.ToString();
                 randevu.telefon = textBox3.Text;
-           
 
 
-            try
+            int RegisterCountControl = RandevuKayıtKontrol();
+       if (RegisterCountControl >0 )
             {
-
-                //int day = dateTimePicker1.Value.Day;
-                DateTime selectedDate = dateTimePicker1.Value;
-
-                string formatDate = selectedDate.ToString("dddd", new CultureInfo("tr-TR"));
-                conn.Open();
-               
-                string query = "insert into Randevutbl (Ad,Soyad,Saha,RandevuGunu,RandevuSaati,Durum,Telefon,RandevuTarihi) values (@ad,@soyad,@saha,@randevugunu,@randevusaati,@durum,@telefon,@randevutarihi)";
-
-           // DateTime selectdate = dateTimePicker1.Value;
-                using (SqlCommand command = new SqlCommand(query, conn))
-
+                MessageBox.Show("Rezerve Edilmiş");
+            }else
+            {
+                try
                 {
-                    command.Parameters.AddWithValue("@ad", randevu.ad);
-                    command.Parameters.AddWithValue("@soyad", randevu.Soyad);
-                    command.Parameters.AddWithValue("@saha", randevu.saha);
-                    command.Parameters.AddWithValue("@randevugunu", formatDate);
-                    command.Parameters.AddWithValue("@randevusaati", randevu.saat);
 
-                    command.Parameters.AddWithValue("@durum", randevu.durum);
-                    command.Parameters.AddWithValue("@telefon", textBox3.Text);
+                    //int day = dateTimePicker1.Value.Day;
+                    DateTime selectedDate = dateTimePicker1.Value;
 
-                    command.Parameters.AddWithValue("@randevutarihi", selectedDate);
-                    command.ExecuteNonQuery();
+                    string formatDate = selectedDate.ToString("dddd", new CultureInfo("tr-TR"));
+                    conn.Open();
+
+                    string query = "insert into Randevutbl (Ad,Soyad,Saha,RandevuGunu,RandevuSaati,Durum,Telefon,RandevuTarihi) values (@ad,@soyad,@saha,@randevugunu,@randevusaati,@durum,@telefon,@randevutarihi)";
+
+                    // DateTime selectdate = dateTimePicker1.Value;
+                    using (SqlCommand command = new SqlCommand(query, conn))
+
+                    {
+                        command.Parameters.AddWithValue("@ad", randevu.ad);
+                        command.Parameters.AddWithValue("@soyad", randevu.Soyad);
+                        command.Parameters.AddWithValue("@saha", randevu.saha);
+                        command.Parameters.AddWithValue("@randevugunu", formatDate);
+                        command.Parameters.AddWithValue("@randevusaati", randevu.saat);
+
+                        command.Parameters.AddWithValue("@durum", randevu.durum);
+                        command.Parameters.AddWithValue("@telefon", textBox3.Text);
+
+                        command.Parameters.AddWithValue("@randevutarihi", selectedDate);
+                        command.ExecuteNonQuery();
+                    }
+
+
+                    conn.Close();
+
+
+
+                    MessageBox.Show("Başarıyla Kayıt Edildi");
+
                 }
+                catch (Exception exception)
+                {
 
-
-                conn.Close();
-
-
-                
-                MessageBox.Show("Başarıyla Kayıt Edildi");
-               
+                    MessageBox.Show(exception.Message, "Bir hata oluştu");
+                }
             }
-            catch(Exception exception)
-            {
 
-                MessageBox.Show(exception.Message,"Bir hata oluştu");
-            }
+          
 
            
 
         }
 
 
+        public int RandevuKayıtKontrol()
+        {
+          
 
+        
+            DateTime selectedDate = dateTimePicker1.Value;
+            string formatDate = selectedDate.ToString("dddd", new CultureInfo("tr-TR"));
+            conn.Open();
+            string query = "select count(*) from Randevutbl where Saha = @saha and RandevuGunu = @randevugunu and RandevuSaati =@randevusaati " ;
+
+            SqlCommand command = new SqlCommand(query, conn);
+
+          
+                 command.Parameters.AddWithValue("@saha", comboBox1.SelectedItem == null ? "Seçilmedi" : comboBox1.SelectedItem.ToString());
+            command.Parameters.AddWithValue("@randevugunu", formatDate);
+            command.Parameters.AddWithValue("@RandevuSaati", comboBox2.SelectedItem == null ? "Seçilmedi" : comboBox2.SelectedItem.ToString());
+            int RandevuSay =(int)command.ExecuteScalar();
+            conn.Close() ;
+
+
+            return RandevuSay;
+
+
+        }
 
         private void GetComboboxValue()
         {
@@ -180,19 +213,72 @@ namespace HalıSaha
             conn.Close();
         }
 
+        //private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        //{
+
+
+        //    if (e.ColumnIndex == 0 && e.RowIndex >= 0 && dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex] is DataGridViewCheckBoxCell)
+        //    {
+        //        DataGridViewCheckBoxCell chk = (DataGridViewCheckBoxCell)dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex];
+
+
+
+
+
+
+
+        //        foreach (DataGridViewRow row in dataGridView1.Rows)
+        //        {
+        //            if (row.Index != e.RowIndex)
+        //            {
+        //                DataGridViewCheckBoxCell chk2 = (DataGridViewCheckBoxCell)row.Cells[0];
+        //                chk2.Value = chk2.FalseValue;
+        //            }
+        //        }
+
+        //        string state = dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString();
+
+        //        if (state == "Yasaklı")
+        //            MessageBox.Show("Bu kişi Yasaklanmıştır", "Yasaklı Üye");
+        //        if (chk.Value == chk.TrueValue && state != "Yasaklı")
+        //        {
+        //            textBox1.Text = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString();
+        //            textBox2.Text = dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString();
+        //            textBox3.Text = dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString();
+        //            chk.Value = chk.TrueValue;
+        //            dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightGreen;
+        //        }
+        //        else if (chk.Value == chk.FalseValue)
+        //        {
+        //            textBox1.Clear();
+        //            textBox2.Clear();
+        //            textBox3.Clear();
+        //            chk.Value = chk.FalseValue;
+        //            dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = dataGridView1.DefaultCellStyle.BackColor;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        foreach (DataGridViewRow row in dataGridView1.Rows)
+        //        {
+        //            DataGridViewCheckBoxCell chk = (DataGridViewCheckBoxCell)row.Cells[0];
+        //            chk.Value = chk.FalseValue;
+        //            dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = dataGridView1.DefaultCellStyle.BackColor;
+        //        }
+        //        textBox1.Clear();
+        //        textBox2.Clear();
+        //        textBox3.Clear();
+
+
+        //    }
+
+        //}
+
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            
             if (e.ColumnIndex == 0 && e.RowIndex >= 0 && dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex] is DataGridViewCheckBoxCell)
             {
                 DataGridViewCheckBoxCell chk = (DataGridViewCheckBoxCell)dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex];
-               
-            
-               
-                    
-               
-              
-
 
                 foreach (DataGridViewRow row in dataGridView1.Rows)
                 {
@@ -202,26 +288,49 @@ namespace HalıSaha
                         chk2.Value = chk2.FalseValue;
                     }
                 }
-                string state = dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString();
-               
-                if (state == "Yasaklı")
-                    MessageBox.Show("Bu kişi Yasaklanmıştır","Yasaklı Üye");
-                if (chk.Value == chk.TrueValue && state!= "Yasaklı")
+
+                if (dataGridView1.Rows[e.RowIndex].Cells[5].Value != null)
                 {
-                    textBox1.Text = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString();
-                    textBox2.Text = dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString();
-                    textBox3.Text = dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString();
-                    chk.Value = chk.TrueValue;
-                    dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightGreen;
+                    string state = dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString();
+
+                    if (state == "Yasaklı")
+                    {
+                        MessageBox.Show("Bu kişi Yasaklanmıştır", "Yasaklı Üye");
+                    }
+
+                    else if (chk.Value == chk.TrueValue)
+                    {
+                        textBox1.Text = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString();
+                        if (dataGridView1.Rows.Count > 0 && e.RowIndex < dataGridView1.Rows.Count)
+                        {
+                            // satır indeksi geçerli ise işlemler yapılır
+                            textBox2.Text = dataGridView1.Rows[e.RowIndex].Cells[3].Value?.ToString();
+                        }
+                        if (dataGridView1.Rows.Count > 0 && e.RowIndex < dataGridView1.Rows.Count)
+                        {
+                            // satır indeksi geçerli ise işlemler yapılır
+                            textBox3.Text = dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString();
+                        }
+
+                        chk.Value = chk.FalseValue;
+                        if (dataGridView1.Rows.Count > 0 && e.RowIndex < dataGridView1.Rows.Count)
+                        {
+                            // satır indeksi geçerli ise işlemler yapılır
+                            dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightGreen;
+                        }
+
+                    }
+                    else if (chk.Value == chk.FalseValue)
+                    {
+                        textBox1.Clear();
+                        textBox2.Clear();
+                        textBox3.Clear();
+                        chk.Value = chk.FalseValue;
+                        dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = dataGridView1.DefaultCellStyle.BackColor;
+                    }
                 }
-                else if (chk.Value == chk.FalseValue)
-                {
-                    textBox1.Clear();
-                    textBox2.Clear();
-                    textBox3.Clear();
-                    chk.Value = chk.FalseValue;
-                    dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = dataGridView1.DefaultCellStyle.BackColor;
-                }
+
+                
             }
             else
             {
@@ -229,19 +338,78 @@ namespace HalıSaha
                 {
                     DataGridViewCheckBoxCell chk = (DataGridViewCheckBoxCell)row.Cells[0];
                     chk.Value = chk.FalseValue;
-                    dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = dataGridView1.DefaultCellStyle.BackColor;
+                    row.DefaultCellStyle.BackColor = dataGridView1.DefaultCellStyle.BackColor;
                 }
+
                 textBox1.Clear();
                 textBox2.Clear();
                 textBox3.Clear();
-
             }
-
         }
+
 
         private void label8_Click(object sender, EventArgs e)
         {
 
         }
+
+
+        public void GetTimeListbox()
+        {
+            List<string> veriler = new List<string>();
+
+            conn.Open();
+            //hata var
+            SqlCommand command = new SqlCommand("select * from Randevutbl",conn);
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            while(reader.Read())
+            {
+                //listBox1.Items.Add(reader["RandevuSaati"].ToString());
+                //veriler.Add(reader.GetString(5));
+                Console.Write(reader.GetString(2));
+            
+            }
+            conn.Close();
+
+            Console.WriteLine(veriler);
+
+            List<string> selectedCombobox = new List<string>();
+
+            if (comboBox2.SelectedItem != null)
+            {
+                 selectedCombobox.Add(comboBox2.SelectedItem.ToString());
+                List<string> eslesenVeri = new List<string>();
+
+                foreach (string veri in veriler)
+                {
+
+                    foreach (string selected in selectedCombobox)
+                    {
+                        if (veri == selected)
+                        {
+                            eslesenVeri.Add(veri);
+                            break;
+                        }
+                    }
+                }
+
+
+
+                foreach (string eslesenveri in eslesenVeri)
+                {
+                    listBox1.Items.Add(eslesenveri);
+                }
+
+            }
+
+
+
+
+
+
+        }
+
     }
 }
