@@ -15,7 +15,7 @@ namespace HalıSaha
     public partial class Member : Form
     {
 
-        SqlConnection conn = new SqlConnection("Data Source=176.236.132.247;Initial Catalog=HaliSahaDb;User Id=sa;Password=XjsqEEWdvP17pMe");
+        SqlConnection conn = new SqlConnection("Data Source=xx;Initial Catalog=HaliSahaDb;");
         public Member()
         {
             InitializeComponent();
@@ -137,6 +137,8 @@ namespace HalıSaha
                 textBox1.Text = selectedRow.Cells["Name"].Value.ToString();
                 textBox2.Text = selectedRow.Cells["Surname"].Value.ToString();  
                 textBox3.Text= selectedRow.Cells["Number"].Value.ToString();    
+                label5.Text = selectedRow.Cells["Id"].Value.ToString();
+                label6.Text = selectedRow.Cells["Name"].Value.ToString();
 
                 //textBox4.Text = selectedRow.Cells["Id"].Value.ToString();
 
@@ -201,6 +203,29 @@ namespace HalıSaha
             textBox2.Clear();
             textBox3.Clear();
 
+
+
+
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            int id = Convert.ToInt32(label5.Text);
+            string query = "delete from Randevutbl where Id=@id";
+
+            SqlCommand command = new SqlCommand(@query,conn);
+
+
+            command.Parameters.AddWithValue("@id", id);
+
+            if (MessageBox.Show("Bu Kullanıcıyı silmek istediğinizden emin misiniz?", "Silme Onayı", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                conn.Open();
+                int rowsAffected = command.ExecuteNonQuery();
+                conn.Close();
+
+                MessageBox.Show("Silme İşlemi başarılı.");
+            }
 
 
 

@@ -20,7 +20,7 @@ namespace HalıSaha
        
 
         #region SqlConnection
-        SqlConnection conn = new SqlConnection("Data Source=176.236.132.247;Initial Catalog=HaliSahaDb;User Id=sa;Password=XjsqEEWdvP17pMe");
+        SqlConnection conn = new SqlConnection("Data Source=xx;Initial Catalog=HaliSahaDb;");
         #endregion
 
         //background
@@ -53,12 +53,7 @@ namespace HalıSaha
 
 
          
-            this.panel9.Visible = true;
-            
-            Button button = (Button)sender;
-         
-
-            textBox1.Text = button.Text;
+          
            
 
 
@@ -77,51 +72,7 @@ namespace HalıSaha
         //randevu silme
        
 
-        private void Button_Delete(object sender, EventArgs e)
-        {
-            Button button = (Button)sender;
-            int id = Convert.ToInt32(button.Tag);
-
-            string query = "delete from Randevutbl where Id = @id";
-
-            SqlCommand command = new SqlCommand(query, conn);
-            command.Parameters.AddWithValue("@id", id);
-
-            if (sayac == 0)
-            {
-                sayac++;
-            
-            }
-            else
-            {
-                if( MessageBox.Show("Bu kaydı silmek istediğinizden emin misiniz?", "Kaydı Sil", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                {
-                    conn.Open();
-                    int result = command.ExecuteNonQuery();
-                    conn.Close();
-
-                    if (result > 0)
-                    {
-                        MessageBox.Show("Randevu Silindi");
-                        panel9.Visible = false;
-                        sayac = 0;
-
-
-                        
-                    }
-                    else
-                    {
-                        MessageBox.Show("Randevu Silinemedi");
-                        sayac = 0;
-                    }
-                }
-
-               sayac = 0;
-
-                //sayac = id == 0 ? 0 : 1;
-                //Getlist();
-            }
-        }
+       
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -218,7 +169,7 @@ namespace HalıSaha
                 DateTime date = (DateTime)row["RandevuTarihi"];
                 int id = (int)row["Id"];
                 Button button = new Button();
-                button.Text = "Rezerve Tarihi:"+date.ToString("dd.MM.yyyy")  + " Rezerve eden: " + row["Ad"].ToString() + " " + row["Soyad"].ToString() + " Telefon Numarası: " + row["Telefon"].ToString() + " Saha Adı: " + row["Saha"].ToString();
+                button.Text = "Rezerve Tarihi:"+date.ToString("dd.MM.yyyy") + "     "+ "Rezerve Saati" + row["RandevuSaati"] +"   "+ " Rezerve eden: " + row["Ad"].ToString() + " " + row["Soyad"].ToString() + " Telefon Numarası: " + row["Telefon"].ToString() + " Saha Adı: " + row["Saha"].ToString();
 
                 button.Width = buttonWidth;
                 button.Height = buttonHeight;
@@ -230,7 +181,7 @@ namespace HalıSaha
                 button1.Font = new Font("Arial", 14, FontStyle.Regular);
                 button.Top = (buttonHeight + 10) * i;
                 button.Location = new Point(10, y);
-                button.Click += new EventHandler(Button_Click);
+                //button.Click += new EventHandler(Button_Click);
                 button.Click += new EventHandler(Button_Delete);
                 
 
@@ -303,7 +254,7 @@ namespace HalıSaha
                 DateTime date = (DateTime)row["RandevuTarihi"];
                 int id = (int)row["Id"];
                 Button button = new Button();
-                button.Text = "Rezerve Tarihi:" + date.ToString("dd.MM.yyyy") + " Rezerve eden: " + row["Ad"].ToString() + " " + row["Soyad"].ToString() + " Telefon Numarası: " + row["Telefon"].ToString() + " Saha Adı: " + row["Saha"].ToString();
+                button.Text = "Rezerve Tarihi:" + date.ToString("dd.MM.yyyy") + "     " + "Rezerve Saati" + row["RandevuSaati"] + "   " + " Rezerve eden: " + row["Ad"].ToString() + " " + row["Soyad"].ToString() + " Telefon Numarası: " + row["Telefon"].ToString() + " Saha Adı: " + row["Saha"].ToString();
                 button.Width = buttonWidth;
                 button.Tag = id;
                 button.Height = buttonHeight;
@@ -311,7 +262,7 @@ namespace HalıSaha
                 button1.Font = new Font("Arial", 14, FontStyle.Regular);
                 button.Top = (buttonHeight + 10) * i;
                 button.Location = new Point(10, y);
-                button.Click += new EventHandler(Button_Click);
+                //bu/*tton.Click += new EventHandler(Button_Click);*/
                 button.Click += new EventHandler(Button_Delete);
                 if (row["Durum"].ToString() == "Rezerve")
                 {
@@ -380,7 +331,7 @@ namespace HalıSaha
                 DateTime date = (DateTime)row["RandevuTarihi"];
                 int id = (int)row["Id"];
                 Button button = new Button();
-                button.Text = "Rezerve Tarihi:" + date.ToString("dd.MM.yyyy") + " Rezerve eden: " + row["Ad"].ToString() + " " + row["Soyad"].ToString() + " Telefon Numarası: " + row["Telefon"].ToString() + " Saha Adı: " + row["Saha"].ToString();
+                button.Text = "Rezerve Tarihi:" + date.ToString("dd.MM.yyyy") + "     " + "Rezerve Saati" + row["RandevuSaati"] + "   " + " Rezerve eden: " + row["Ad"].ToString() + " " + row["Soyad"].ToString() + " Telefon Numarası: " + row["Telefon"].ToString() + " Saha Adı: " + row["Saha"].ToString();
                 button.Tag = id;
                 button.Width = buttonWidth;
                 button.Height = buttonHeight;
@@ -388,7 +339,7 @@ namespace HalıSaha
                 button1.Font = new Font("Arial", 14, FontStyle.Regular);
                 button.Top = (buttonHeight + 10) * i;
                 button.Location = new Point(10, y);
-                button.Click += new EventHandler(Button_Click);
+                //button.Click += new EventHandler(Button_Click);
                 //button.Click += new EventHandler(button3_Click);
                 button.Click += new EventHandler(Button_Delete);
 
@@ -457,7 +408,7 @@ namespace HalıSaha
                 DateTime date = (DateTime)row["RandevuTarihi"];
                 int id = (int)row["Id"];
                 Button button = new Button();
-                button.Text = "Rezerve Tarihi:" + date.ToString("dd.MM.yyyy") + " Rezerve eden: " + row["Ad"].ToString() + " " + row["Soyad"].ToString() + " Telefon Numarası: " + row["Telefon"].ToString() + " Saha Adı: " + row["Saha"].ToString();
+                button.Text = "Rezerve Tarihi:" + date.ToString("dd.MM.yyyy") + "     " + "Rezerve Saati" + row["RandevuSaati"] + "   " + " Rezerve eden: " + row["Ad"].ToString() + " " + row["Soyad"].ToString() + " Telefon Numarası: " + row["Telefon"].ToString() + " Saha Adı: " + row["Saha"].ToString();
                 button.Tag = id;
                 button.Width = buttonWidth;
                 button.Height = buttonHeight;
@@ -465,7 +416,7 @@ namespace HalıSaha
                 button1.Font = new Font("Arial", 14, FontStyle.Regular);
                 button.Top = (buttonHeight + 10) * i;
                 button.Location = new Point(10, y);
-                button.Click += new EventHandler(Button_Click);
+                //button.Click += new EventHandler(Button_Click);
                 button.Click += new EventHandler(Button_Delete);
                 //button.Click += new EventHandler(button3_Click);
 
@@ -537,8 +488,7 @@ namespace HalıSaha
                 DateTime date = (DateTime)row["RandevuTarihi"];
                 int id = (int)row["Id"];
                 Button button = new Button();
-                button.Text = "Rezerve Tarihi:" + date.ToString("dd.MM.yyyy") + " Rezerve eden: " + row["Ad"].ToString() + " " + row["Soyad"].ToString() + " Telefon Numarası: " + row["Telefon"].ToString() + " Saha Adı: " + row["Saha"].ToString();
-
+                button.Text = "Rezerve Tarihi:" + date.ToString("dd.MM.yyyy") + "     " + "Rezerve Saati" + row["RandevuSaati"] + "   " + " Rezerve eden: " + row["Ad"].ToString() + " " + row["Soyad"].ToString() + " Telefon Numarası: " + row["Telefon"].ToString() + " Saha Adı: " + row["Saha"].ToString();
                 button.Width = buttonWidth;
                 button.Tag = id;
                 button.Width = buttonWidth;
@@ -547,7 +497,7 @@ namespace HalıSaha
                 button1.Font = new Font("Arial", 14, FontStyle.Regular);
                 button.Top = (buttonHeight + 10) * i;
                 button.Location = new Point(10, y);
-                button.Click += new EventHandler(Button_Click);
+                //button.Click += new EventHandler(Button_Click);
                 button.Click += new EventHandler(Button_Delete);
 
                 //button.Click += new EventHandler(button3_Click);
@@ -620,7 +570,7 @@ namespace HalıSaha
                 DateTime date = (DateTime)row["RandevuTarihi"];
                 int id = (int)row["Id"];
                 Button button = new Button();
-                button.Text = "Rezerve Tarihi:" + date.ToString("dd.MM.yyyy") + " Rezerve eden: " + row["Ad"].ToString() + " " + row["Soyad"].ToString() + " Telefon Numarası: " + row["Telefon"].ToString() + " Saha Adı: " + row["Saha"].ToString();
+                button.Text = "Rezerve Tarihi:" + date.ToString("dd.MM.yyyy") + "     " + "Rezerve Saati" + row["RandevuSaati"] + "   " + " Rezerve eden: " + row["Ad"].ToString() + " " + row["Soyad"].ToString() + " Telefon Numarası: " + row["Telefon"].ToString() + " Saha Adı: " + row["Saha"].ToString();
                 button.Tag = id;
                 button.Width = buttonWidth;
                 button.Height = buttonHeight;
@@ -628,7 +578,7 @@ namespace HalıSaha
                 button1.Font = new Font("Arial", 14, FontStyle.Regular);
                 button.Top = (buttonHeight + 10) * i;
                 button.Location = new Point(10, y);
-                button.Click += new EventHandler(Button_Click);
+                //button.Click += new EventHandler(Button_Click);
                 button.Click += new EventHandler(Button_Delete);
 
                 //button.Click += new EventHandler(button3_Click);
@@ -703,10 +653,9 @@ namespace HalıSaha
                 DateTime date = (DateTime)row["RandevuTarihi"];
                 int id = (int)row["Id"];
                 Button button = new Button();
-                button.Text = "Rezerve Tarihi:" + date.ToString("dd.MM.yyyy") + " Rezerve eden: " + row["Ad"].ToString() + " " + row["Soyad"].ToString() + " Telefon Numarası: " + row["Telefon"].ToString() + " Saha Adı: " + row["Saha"].ToString();
+                button.Text = "Rezerve Tarihi:" + date.ToString("dd.MM.yyyy") + "     " + "Rezerve Saati" + row["RandevuSaati"] + "   " + " Rezerve eden: " + row["Ad"].ToString() + " " + row["Soyad"].ToString() + " Telefon Numarası: " + row["Telefon"].ToString() + " Saha Adı: " + row["Saha"].ToString();
 
 
-           
                 button.Tag = id;
                 button.Width = buttonWidth;
                 button.Height = buttonHeight;
@@ -714,7 +663,7 @@ namespace HalıSaha
                 button1.Font = new Font("Arial", 14, FontStyle.Regular);
                 button.Top = (buttonHeight + 10) * i;
                 button.Location = new Point(10, y);
-                button.Click += new EventHandler(Button_Click);
+                //button.Click += new EventHandler(Button_Click);
                 //button.Click += new EventHandler(button3_Click);
                 button.Click += new EventHandler(Button_Delete);
 
@@ -775,7 +724,57 @@ namespace HalıSaha
             panel9.Visible = false;
         }
 
-        
+        //Delete Button
+
+        private void Button_Delete(object sender, EventArgs e)
+        {
+          
+            Button button = (Button)sender;
+            int id = Convert.ToInt32(button.Tag);
+            this.panel9.Visible = true;
+
+
+  
+
+            textBox1.Text = button.Text;
+
+            //string query = "delete from Randevutbl where Id = @id";
+
+            //SqlCommand command = new SqlCommand(query, conn);
+            //command.Parameters.AddWithValue("@id", id);
+
+
+
+                    //if (MessageBox.Show("Bu kaydı silmek istediğinizden emin misiniz?", "Kaydı Sil", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    //{
+                    //    conn.Open();
+                    //    int result = command.ExecuteNonQuery();
+                    //    conn.Close();
+
+                    //    if (result > 0)
+                    //    {
+                    //        MessageBox.Show("Randevu Silindi");
+                    //        panel9.Visible = false;
+                    //        buttonid = -1;
+
+
+
+                    //    }
+                    //    else
+                    //    {
+                    //        MessageBox.Show("Randevu Silinemedi");
+                    //        buttonid = -1;
+                    //}
+               
+
+
+
+
+            }
+
+     
+
+
     }
 }
 

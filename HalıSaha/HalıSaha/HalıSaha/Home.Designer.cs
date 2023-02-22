@@ -67,9 +67,9 @@
             // 
             // Yenile
             // 
-            this.Yenile.Location = new System.Drawing.Point(45, 392);
+            this.Yenile.Location = new System.Drawing.Point(32, 368);
             this.Yenile.Name = "Yenile";
-            this.Yenile.Size = new System.Drawing.Size(169, 59);
+            this.Yenile.Size = new System.Drawing.Size(182, 76);
             this.Yenile.TabIndex = 2;
             this.Yenile.Text = "Yenile";
             this.Yenile.UseVisualStyleBackColor = true;
@@ -246,7 +246,7 @@
             this.panel9.Controls.Add(this.label8);
             this.panel9.Controls.Add(this.textBox1);
             this.panel9.Font = new System.Drawing.Font("Microsoft YaHei", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.panel9.Location = new System.Drawing.Point(12, 17);
+            this.panel9.Location = new System.Drawing.Point(12, 31);
             this.panel9.Name = "panel9";
             this.panel9.Size = new System.Drawing.Size(303, 353);
             this.panel9.TabIndex = 0;
@@ -264,7 +264,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(103, 21);
+            this.label8.Location = new System.Drawing.Point(97, 17);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(77, 23);
             this.label8.TabIndex = 1;

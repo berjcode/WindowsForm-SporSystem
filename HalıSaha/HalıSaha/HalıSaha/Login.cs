@@ -19,7 +19,8 @@ namespace HalıSaha
         #endregion
 
         #region SqlConnection
-        SqlConnection conn = new SqlConnection("Data Source=176.236.132.247;Initial Catalog=HaliSahaDb;User Id=sa;Password=XjsqEEWdvP17pMe");
+
+        SqlConnection conn = new SqlConnection("Data Source=xx;Initial Catalog=HaliSahaDb;");
         #endregion
         public Login()
         {

@@ -17,20 +17,21 @@ namespace HalıSaha
 {
     public partial class Register : Form
     {
-
-        SqlConnection conn = new SqlConnection("Data Source=176.236.132.247;Initial Catalog=HaliSahaDb;User Id=sa;Password=XjsqEEWdvP17pMe");
+        SqlConnection conn = new SqlConnection("Data Source=xx;Initial Catalog=HaliSahaDb;");
         Randevu randevu = new Randevu();
        
 
         public Register()
         {
             InitializeComponent();
-            GetTimeListbox();
+            dateTimePicker2.Value = DateTime.Today;
+            //GetTimeListbox();
             GetComboboxValue();
+        
         }
         private void Register_Load(object sender, EventArgs e)
         {
-            GetTimeListbox();
+            //GetTimeListbox();
         }
         public void button1_Click(object sender, EventArgs e)
         {
@@ -185,6 +186,7 @@ namespace HalıSaha
             }else
             {
                 SearchData(searchValue);
+                SearchDataRandevu(searchValue);
             }
 
                
@@ -353,63 +355,327 @@ namespace HalıSaha
 
         }
 
-
-        public void GetTimeListbox()
+        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            List<string> veriler = new List<string>();
 
-            conn.Open();
-            //hata var
-            SqlCommand command = new SqlCommand("select * from Randevutbl",conn);
-
-            SqlDataReader reader = command.ExecuteReader();
-
-            while(reader.Read())
+            if (e.ColumnIndex ==0) // burada Checkbox sütununun sütun dizinini belirleyin
             {
-                //listBox1.Items.Add(reader["RandevuSaati"].ToString());
-                //veriler.Add(reader.GetString(5));
-                Console.Write(reader.GetString(2));
-            
-            }
-            conn.Close();
-
-            Console.WriteLine(veriler);
-
-            List<string> selectedCombobox = new List<string>();
-
-            if (comboBox2.SelectedItem != null)
-            {
-                 selectedCombobox.Add(comboBox2.SelectedItem.ToString());
-                List<string> eslesenVeri = new List<string>();
-
-                foreach (string veri in veriler)
-                {
-
-                    foreach (string selected in selectedCombobox)
+                DataGridViewCheckBoxCell chk = (DataGridViewCheckBoxCell)dataGridView2.Rows[e.RowIndex].Cells[e.ColumnIndex];
+              
+                if (e.ColumnIndex == 0) // Burada 0, CheckBox sütununun sıfır tabanlı ColumnIndex değeridir.
                     {
-                        if (veri == selected)
-                        {
-                            eslesenVeri.Add(veri);
-                            break;
-                        }
+                        int rowIndex = e.RowIndex;
+                        DataGridViewRow row = dataGridView2.Rows[e.RowIndex];
+
+
+
+                    if (row.Cells[2].Value != null)
+                    {
+                        label11.Text = row.Cells[2].Value.ToString();
                     }
+                    else
+                    {
+                        label11.Text = "";
+                    }
+
+                    if (row.Cells[1].Value != null)
+                    {
+                        label10.Text = row.Cells[1].Value.ToString();
+                    }
+                    else
+                    {
+                        label10.Text = "";
+                    }
+
+
+                    if (row.Cells[2].Value != null)
+                        {
+                            textBox1.Text = row.Cells[2].Value.ToString();
+                        }
+                        else
+                        {
+                            textBox1.Text = "";
+                        }
+
+                        if (row.Cells[3].Value != null)
+                        {
+                            textBox2.Text = row.Cells[3].Value.ToString();
+                        }
+                        else
+                        {
+                            textBox2.Text = "";
+                        }
+
+                        if (row.Cells[4].Value != null)
+                        {
+                            comboBox1.Text = row.Cells[4].Value.ToString();
+                        }
+                        else
+                        {
+                            comboBox1.Text = "";
+                        }
+
+                        if (row.Cells[7].Value != null)
+                        {
+                            comboBox4.Text = row.Cells[7].Value.ToString();
+                        }
+                        else
+                        {
+                            comboBox4.Text = "";
+                        }
+
+                        if (row.Cells[6].Value != null)
+                        {
+                            comboBox2.Text = row.Cells[6].Value.ToString();
+                        }
+                        else
+                        {
+                            comboBox2.Text = "";
+                        }
+
+                        if (row.Cells[8].Value != null)
+                        {
+                            textBox3.Text = row.Cells[8].Value.ToString();
+                        }
+                        else
+                        {
+                            textBox3.Text = "";
+                        }
+                    
+
+                    // burada verileri TextBox ve ComboBox'lara aktarabilirsiniz
                 }
-
-
-
-                foreach (string eslesenveri in eslesenVeri)
+                else
                 {
-                    listBox1.Items.Add(eslesenveri);
+                    // CheckBox seçimi kaldırıldığında yapılacak işlemler
+                    // burada TextBox ve ComboBox'ların değerlerini temizleyebilirsiniz
                 }
-
             }
-
-
-
-
+       
 
 
         }
 
+        public void SearchDataRandevu(string seachValue)
+        {
+            string query = "select * from RandevuTbl  where Ad like @SearchValue or Soyad like @SearchValue or RandevuGunu = @SearchValue or Durum =@SearchValue or RandevuSaati=@SearchValue";
+
+            SqlCommand command = new SqlCommand(query, conn);
+
+            conn.Open();
+
+            command.Parameters.AddWithValue("@SearchValue", "%" + seachValue + "%");
+
+
+            SqlDataAdapter adapter = new SqlDataAdapter(command);
+            DataTable dataTable = new DataTable();
+
+            adapter.Fill(dataTable);
+            dataGridView2.DataSource = dataTable;
+
+            conn.Close();
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+            string searchValue = textBox3.Text.Trim();
+
+
+            if (string.IsNullOrEmpty(searchValue))
+            {
+                //
+
+            }
+            else
+            {
+                SearchData(searchValue);
+                SearchDataRandevu(searchValue);
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            
+
+            if (string.IsNullOrEmpty(textBox1.Text) || string.IsNullOrEmpty(textBox2.Text))
+            {
+                MessageBox.Show("Lütfen Ad ve Soyad alanlarını doldurunuz.", "Uyarı");
+                return;
+            }
+           
+              
+         
+            int id = Convert.ToInt32(label10.Text);
+
+            string Name = textBox1.Text.Trim();
+            string Surname = textBox2.Text.Trim();
+            string Saha = comboBox1.SelectedItem == null ? "Seçilmedi" : comboBox1.SelectedItem.ToString();
+            string Clock = comboBox2.SelectedItem == null ? "Seçilmedi" : comboBox2.SelectedItem.ToString();
+            DateTime selectedDate = dateTimePicker1.Value;
+
+
+            string formatDate = selectedDate.ToString("dddd", new CultureInfo("tr-TR"));
+
+            string State = comboBox4.SelectedItem == null ? "Seçilmedi" : comboBox4.SelectedItem.ToString();
+
+            string Phone = textBox3.Text.Trim();
+            //id
+            
+           
+
+            string query = "update Randevutbl set Ad=@name ,Soyad =@soyad, Saha =@saha , RandevuGunu = @randevugunu,RandevuSaati = @randevusaati ,Durum=@durum,Telefon =@telefon where Id = @id";
+
+            SqlCommand command = new SqlCommand(query,conn);
+
+
+            command.Parameters.AddWithValue("@name", Name);
+            command.Parameters.AddWithValue("@soyad",Surname);
+            command.Parameters.AddWithValue("@saha", Saha);
+            command.Parameters.AddWithValue("@randevugunu", formatDate);
+            command.Parameters.AddWithValue("@randevusaati", Clock);
+            command.Parameters.AddWithValue("@durum",State);
+            command.Parameters.AddWithValue("@telefon", Phone);
+            command.Parameters.AddWithValue("@id",id);
+
+
+
+            conn.Open();
+             int rowsAffected = command.ExecuteNonQuery();
+
+            conn.Close();
+            if(rowsAffected >0 )
+            {
+                MessageBox.Show("Güncelleme İşlemi Başarıyla tamamlandı");
+                textBox1.Clear();
+                textBox2.Clear();
+                textBox3.Clear();
+               
+                comboBox1.Items.Clear();
+                comboBox2.Items.Clear();    
+                comboBox4.Items.Clear();
+                
+            }
+
+        }
+
+        private void label10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+
+        //public void GetTimeListbox()
+        //{
+        //    List<string> veriler = new List<string>();
+
+        //    conn.Open();
+        //    //hata var
+        //    SqlCommand command = new SqlCommand("select * from Randevutbl",conn);
+
+        //    SqlDataReader reader = command.ExecuteReader();
+
+        //    while(reader.Read())
+        //    {
+        //        //listBox1.Items.Add(reader["RandevuSaati"].ToString());
+        //        //veriler.Add(reader.GetString(5));
+        //        Console.Write(reader.GetString(2));
+
+        //    }
+        //    conn.Close();
+
+        //    Console.WriteLine(veriler);
+
+        //    List<string> selectedCombobox = new List<string>();
+
+        //    if (comboBox2.SelectedItem != null)
+        //    {
+        //         selectedCombobox.Add(comboBox2.SelectedItem.ToString());
+        //        List<string> eslesenVeri = new List<string>();
+
+        //        foreach (string veri in veriler)
+        //        {
+
+        //            foreach (string selected in selectedCombobox)
+        //            {
+        //                if (veri == selected)
+        //                {
+        //                    eslesenVeri.Add(veri);
+        //                    break;
+        //                }
+        //            }
+        //        }
+
+
+
+        //        foreach (string eslesenveri in eslesenVeri)
+        //        {
+        //            listBox1.Items.Add(eslesenveri);
+        //        }
+
+        //    }
+
+
+
+
+
+
+        //}
+
+    
+        public void GetClock()
+        {
+            try
+            {
+                DateTime selectedDate = dateTimePicker2.Value.Date;
+
+                string formatDate = selectedDate.ToString("dddd", new CultureInfo("tr-TR"));
+
+                string query = "select * from Randevutbl where cast(RandevuTarihi as date ) = cast(@randevutarihi as date)";
+                SqlCommand command = new SqlCommand(query, conn);
+                command.Parameters.AddWithValue("@randevutarihi", selectedDate);
+
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                DataTable dataTable = new DataTable();
+
+                adapter.Fill(dataTable);
+
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    listBox1.Items.Add(row["RandevuSaati"].ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Bir hata oluştu: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+       
+        private void button3_Click(object sender, EventArgs e)
+        {
+            listBox1.Items.Clear();
+            GetClock();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            int id = Convert.ToInt32(label10.Text);
+            string query = "delete from Randevutbl where Id= @id";
+
+            SqlCommand command = new SqlCommand(query, conn);
+
+            command.Parameters.AddWithValue("@id",id);
+
+            if (MessageBox.Show("Bu Randevuyu silmek istediğinizden emin misiniz?", "Silme Onayı", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                conn.Open();
+                int rowsAffected = command.ExecuteNonQuery();
+                conn.Close();
+
+                MessageBox.Show("Silme İşlemi başarılı.");
+            }
+           
+        }
     }
 }
